@@ -26,26 +26,27 @@ after_success:
   - codecov
 
 matrix:
-  allow_failures:
-    - python: nightly
-  fast_finish: true
   include:
     # Test the oldest supported python on
     # the latest supported kubernetes-client,
     # and use the latest supported kubernetes
     # version along for the kubernetes-client.
     - python: 3.8
-      env: KUBE_PY=7
-      # env: KUBE_PY=7 KUBE_VERSION=1.11.*
+      env: KUBE_PY=7 KUBE_VERSION=1.11.10
     - python: 3.7
-      env: KUBE_PY=8
-      # env: KUBE_PY=8 KUBE_VERSION=1.12.*
+      env: KUBE_PY=8 KUBE_VERSION=1.12.10
     - python: 3.6
-      env: KUBE_PY=9
-      # env: KUBE_PY=9 KUBE_VERSION=1.13.*
+      env: KUBE_PY=9 KUBE_VERSION=1.13.10
     - python: 3.5
-      env: KUBE_PY=10
-      # env: KUBE_PY=10 KUBE_VERSION=1.14.*
+      env: KUBE_PY=10 KUBE_VERSION=1.14.0
+    # We test nightly python and kubernetes versions
+    # that are beyond what the kubernetes-client/python
+    # library supports currently.
     - python: nightly
-      env: KUBE_PY=11
-      # env: KUBE_PY=11 KUBE_VERSION=1.15.*
+      env: KUBE_PY=11 KUBE_VERSION=1.15.0
+    - python: 3.8
+      env: &unsupported_kubernetes KUBE_PY=10 KUBE_VERSION=1.16.*
+  allow_failures:
+    - python: nightly
+    - env: *unsupported_kubernetes
+  fast_finish: true
