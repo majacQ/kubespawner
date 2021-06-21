@@ -7,9 +7,11 @@ Kubespawner
    :maxdepth: 2
 
    overview.md
+   changelog
    spawner
    objects
    reflector
+   ssl.md
    traitlets
    utils
 

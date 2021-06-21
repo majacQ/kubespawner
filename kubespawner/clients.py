@@ -1,6 +1,22 @@
+"""Shared clients for kubernetes
+
+avoids creating multiple kubernetes client objects,
+each of which spawns an unused max-size thread pool
+"""
 import weakref
+from unittest.mock import Mock
 
 import kubernetes.client
+from kubernetes.client import api_client
+
+# FIXME: remove when instantiating a kubernetes client
+# doesn't create N-CPUs threads unconditionally.
+# monkeypatch threadpool in kubernetes api_client
+# to avoid instantiating ThreadPools.
+# This is known to work for kubernetes-4.0
+# and may need updating with later kubernetes clients
+_dummy_pool = Mock()
+api_client.ThreadPool = lambda *args, **kwargs: _dummy_pool
 
 _client_cache = {}
 
@@ -22,6 +38,9 @@ def shared_client(ClientType, *args, **kwargs):
         client = _client_cache[cache_key]()
 
     if client is None:
+        # Kubernetes client configuration is handled globally
+        # in kubernetes.py and is already called in spawner.py
+        # or proxy.py prior to a shared_client being instantiated
         Client = getattr(kubernetes.client, ClientType)
         client = Client(*args, **kwargs)
         # cache weakref so that clients can be garbage collected

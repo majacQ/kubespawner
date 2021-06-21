@@ -1,3 +1,21 @@
+# Artifacts from running kubespawner tests with minikube
+bin/
+lib64
+minikube-linux-amd64
+node_modules/
+package-lock.json
+pyvenv.cfg
+share/
+pip-selfcheck.json
+
+# JupyterHub running from kubespawner folder for development purposes
+jupyterhub-proxy.pid
+jupyterhub.sqlite
+jupyterhub_cookie_secret
+
+# Editors
+.vscode
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -39,6 +57,7 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
+.pytest_cache
 nosetests.xml
 coverage.xml
 *,cover
@@ -51,8 +70,8 @@ coverage.xml
 *.log
 
 # Sphinx documentation
-docs/_build/
-docs/source/_build/
+docs/build/
+docs/source/build/
 
 # PyBuilder
 target/

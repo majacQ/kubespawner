@@ -1,6 +1,0 @@
-name: kubespawner
-type: sphinx
-conda:
-    file: docs/environment.yml
-python:
-  version: 3
