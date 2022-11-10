@@ -5,3 +5,4 @@ sphinx>=1.7
 sphinx-copybutton
 sphinx_rtd_theme
 traitlets>=4.1
+pygments>=2.7.4 # not directly required, pinned by Snyk to avoid a vulnerability
